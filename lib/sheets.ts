@@ -1,0 +1,156 @@
+// Live data from the ELEVATE'27 Google Sheet (CSV export, sheet shared "anyone with the link").
+// One spreadsheet, three tabs; env vars override the defaults. If a tab can't be
+// fetched, callers get `null` and render their fallback.
+
+const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID || '16zCivkxycg37rWt65a4aeR3b-Ku-vVbkWyCYLKTA-_4';
+const GIDS = {
+  speakers: process.env.NEXT_PUBLIC_SPEAKERS_GID || '168332648',
+  partners: process.env.NEXT_PUBLIC_PARTNERS_GID || '89538245',
+  soldOut: process.env.NEXT_PUBLIC_SOLD_OUT_GID || '2059209065',
+};
+
+// Column index by header name (case/whitespace-insensitive), e.g. "Name " → name.
+function columns(header: string[], wanted: Record<string, (h: string) => boolean>) {
+  const norm = header.map((h) => h.trim().toLowerCase());
+  return Object.fromEntries(
+    Object.entries(wanted).map(([key, test]) => [key, norm.findIndex(test)]),
+  ) as Record<string, number>;
+}
+
+const cell = (row: string[], i: number) => (i >= 0 ? (row[i] ?? '').trim() : '');
+
+export interface Speaker {
+  name: string;
+  title: string;
+  company: string;
+  image: string;
+  linkedin?: string;
+}
+
+export interface Partner {
+  name: string;
+  logo: string;
+  website?: string;
+}
+
+// RFC 4180-ish parser: handles quoted fields, escaped quotes and newlines in quotes.
+export function parseCSV(text: string): string[][] {
+  const rows: string[][] = [];
+  let row: string[] = [];
+  let field = '';
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"' && text[i + 1] === '"') { field += '"'; i++; }
+      else if (c === '"') inQuotes = false;
+      else field += c;
+    } else if (c === '"') inQuotes = true;
+    else if (c === ',') { row.push(field.trim()); field = ''; }
+    else if (c === '\n') { row.push(field.trim()); rows.push(row); row = []; field = ''; }
+    else if (c !== '\r') field += c;
+  }
+  if (field || row.length) { row.push(field.trim()); rows.push(row); }
+  return rows.filter((r) => r.some(Boolean));
+}
+
+const cache = new Map<string, Promise<string[][] | null>>();
+
+function fetchTab(gid: string): Promise<string[][] | null> {
+  if (!SHEET_ID || !gid) return Promise.resolve(null);
+  if (!cache.has(gid)) {
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${gid}`;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 10000);
+    cache.set(
+      gid,
+      fetch(url, { signal: controller.signal })
+        .then((r) => (r.ok ? r.text() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then(parseCSV)
+        .catch((err) => {
+          console.error(`Sheet tab ${gid} failed:`, err);
+          return null;
+        })
+        .finally(() => clearTimeout(timer)),
+    );
+  }
+  return cache.get(gid)!;
+}
+
+export async function fetchSpeakers(): Promise<Speaker[] | null> {
+  const rows = await fetchTab(GIDS.speakers);
+  if (!rows) return null;
+  // Expected headers: Name, Title, Company, Image, Linkedin
+  const col = columns(rows[0], {
+    name: (h) => h === 'name',
+    title: (h) => h === 'title' || h === 'designation',
+    company: (h) => h === 'company' || h === 'organisation' || h === 'organization',
+    image: (h) => h.includes('image') || h.includes('photo'),
+    linkedin: (h) => h.includes('linkedin'),
+  });
+  return rows
+    .slice(1)
+    .map((r) => ({
+      name: cell(r, col.name),
+      title: cell(r, col.title).replace(/[,.]\s*$/, ''),
+      company: cell(r, col.company),
+      image: cell(r, col.image),
+      linkedin: cell(r, col.linkedin) || undefined,
+    }))
+    .filter((s) => s.name && s.image);
+}
+
+export async function fetchPartners(): Promise<Partner[] | null> {
+  const rows = await fetchTab(GIDS.partners);
+  if (!rows) return null;
+  // Works with just a "Logo Link" column; "Name" and "Website" columns are optional.
+  const col = columns(rows[0], {
+    name: (h) => h === 'name' || h.includes('partner'),
+    logo: (h) => h.includes('logo'),
+    website: (h) => h.includes('website') || h === 'url' || h === 'link',
+  });
+  return rows
+    .slice(1)
+    .map((r, i) => ({
+      name: cell(r, col.name) || `Partner ${i + 1}`,
+      logo: cell(r, col.logo),
+      website: cell(r, col.website) || undefined,
+    }))
+    .filter((p) => p.logo.startsWith('http') || p.logo.startsWith('/'));
+}
+
+export async function fetchSoldOut(): Promise<boolean> {
+  const rows = await fetchTab(GIDS.soldOut);
+  if (!rows || rows.length < 2) return false;
+  const col = rows[0].findIndex((h) => h.trim().toLowerCase() === 'sold out');
+  return col !== -1 && rows[1][col]?.toUpperCase() === 'TRUE';
+}
+
+// Google Drive share links → URLs that render in <img>, in order of reliability.
+export function imageCandidates(url: string): string[] {
+  if (!url.includes('drive.google.com')) return [url];
+  const id = url.match(/\/d\/([\w-]{20,})/)?.[1] ?? url.match(/id=([\w-]{20,})/)?.[1];
+  if (!id) return [url];
+  return [
+    `https://drive.google.com/thumbnail?id=${id}&sz=w1000`,
+    `https://lh3.googleusercontent.com/d/${id}`,
+    `https://drive.google.com/uc?export=view&id=${id}`,
+  ];
+}
+
+// Shown while the 2027 line-up is unannounced.
+export const PAST_SPEAKERS: Speaker[] = [
+  { name: 'Seeram Sambasiva Rao IAS', title: 'Special Secretary (E & ITD) / Chairman', company: 'Kerala State IT Mission', image: '/speakers/speaker_1.jpg' },
+  { name: 'Col. Sanjeev Nair (Retd.)', title: 'CEO', company: 'Technopark', image: '/speakers/speaker_4.jpg', linkedin: 'https://www.linkedin.com/in/sanjeevnair13' },
+  { name: 'Anoop Ambika', title: 'CEO', company: 'Kerala Startup Mission', image: '/speakers/speaker_2.jpg', linkedin: 'https://www.linkedin.com/in/anoopambika' },
+  { name: 'Nisha Gopinath', title: 'VP & Head of HR', company: 'IBM India and South Asia', image: '/speakers/speaker_6.jpg', linkedin: 'https://www.linkedin.com/in/nisha-gopinath-4087651' },
+  { name: 'Sreekumar V', title: 'Secretary, GTech & Centre Head', company: 'Tata Elxsi', image: '/speakers/speaker_3.jpg', linkedin: 'https://www.linkedin.com/in/sreekumarv' },
+  { name: 'Deepu S Nath', title: 'Managing Director', company: 'Faya', image: '/speakers/speaker_5.jpg', linkedin: 'https://www.linkedin.com/in/deepusnath' },
+  { name: 'Charles Godwin', title: 'HR Leader', company: 'Zoho Corporation', image: '/speakers/speaker_7.jpg', linkedin: 'https://www.linkedin.com/in/charlesgodwin' },
+  { name: 'Jayan Nair', title: 'Chief People Officer', company: 'IBS Software', image: '/speakers/speaker_10.jpg', linkedin: 'https://www.linkedin.com/in/jayan-nair-0b11874' },
+  { name: 'Saurabh Singh', title: 'Consulting and Capability', company: 'SHRM India', image: '/speakers/speaker_9.jpg', linkedin: 'https://www.linkedin.com/in/learnsingh' },
+  { name: 'Manoj Elanjickal', title: 'Director – People & Culture', company: 'H&R Block India', image: '/speakers/speaker_11.jpg', linkedin: 'https://www.linkedin.com/in/manojelanjickal' },
+  { name: 'Dr. Jayasankar Prasad C', title: 'Director', company: 'CMD', image: '/speakers/speaker_15.jpg', linkedin: 'https://www.linkedin.com/in/jayasankar-prasad-c-b5459bb' },
+  { name: 'Aditi Radhakrishnan', title: 'Consultant & Coach', company: 'Mitara Consulting Services', image: '/speakers/speaker_14.jpg', linkedin: 'https://www.linkedin.com/in/aditiradhakrishnan' },
+];

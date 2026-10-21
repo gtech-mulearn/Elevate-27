@@ -1,0 +1,25 @@
+[build]
+  publish = "out"
+  command = "npm run build"
+
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_VERSION = "10"
+  # Speakers / partners / sold-out status come from the ELEVATE'27 Google Sheet
+  # (defaults in lib/sheets.ts). Uncomment to point at a different sheet or tab.
+  # NEXT_PUBLIC_SHEET_ID = "16zCivkxycg37rWt65a4aeR3b-Ku-vVbkWyCYLKTA-_4"
+  # NEXT_PUBLIC_SPEAKERS_GID = "168332648"
+  # NEXT_PUBLIC_PARTNERS_GID = "89538245"
+  # NEXT_PUBLIC_SOLD_OUT_GID = "2059209065"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

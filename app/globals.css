@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@theme {
+  /* Palette from the ELEVATE 27 poster: white, black, red → magenta */
+  --color-paper: #ffffff;
+  --color-paper-2: #f3f3f4;
+  --color-ink: #0b0b0c;
+  --color-ink-soft: #3a3a3f;
+  --color-muted: #74747b;
+  --color-forest: #0d0d0f;
+  --color-forest-2: #18181b;
+  --color-forest-3: #232327;
+  --color-gold: #c21fcb;
+  --color-gold-soft: #f8b6d6;
+  --color-laterite: #e8203f;
+  --color-laterite-soft: #ff5f78;
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-malayalam: var(--font-ml), var(--font-fraunces), serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-spin-slow: spin 28s linear infinite;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* Spotlight beams (Speakers backdrop) */
+@keyframes sway {
+  from { rotate: -4deg; }
+  to { rotate: 4deg; }
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-gold-soft);
+  color: var(--color-ink);
+}
+
+/* Fine paper grain over the whole page */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Kasavu — the gold border of a Kerala saree, used as a section divider */
+.kasavu {
+  height: 18px;
+  background-image: var(--grad);
+  --kasavu-shape:
+    linear-gradient(#000, #000) top / 100% 4px no-repeat,
+    linear-gradient(#000, #000) 0 8px / 100% 1px no-repeat,
+    linear-gradient(#000, #000) bottom / 100% 1px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='6'%3E%3Cpath d='M7 0 10 3 7 6 4 3Z'/%3E%3C/svg%3E") 0 11px / 14px 6px repeat-x;
+  -webkit-mask: var(--kasavu-shape);
+  mask: var(--kasavu-shape);
+}
+
+/* Poster gradient: red → magenta */
+:root {
+  --grad: linear-gradient(105deg, #f0263e 0%, #e31c6e 48%, #c21fcb 100%);
+}
+.bg-grad {
+  background-image: var(--grad);
+}
+.text-grad {
+  background-image: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-variation-settings: "SOFT" 50, "WONK" 0;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+}
+
+.text-outline {
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px currentColor;
+}
+
+/* Underline that draws in on hover */
+.link-draw {
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.4s var(--ease-out-expo);
+}
+.link-draw:hover,
+.link-draw[aria-current="true"] {
+  background-size: 100% 1px;
+}
+
+/* Ticket perforation */
+.perforation-x {
+  background-image: radial-gradient(circle, var(--color-paper) 3px, transparent 3.5px);
+  background-size: 14px 14px;
+  background-position: center;
+  background-repeat: repeat-x;
+}
+.perforation-y {
+  background-image: radial-gradient(circle, var(--color-paper) 3px, transparent 3.5px);
+  background-size: 14px 14px;
+  background-position: center;
+  background-repeat: repeat-y;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-laterite);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
