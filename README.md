@@ -1,4 +1,4 @@
-# ELEVATE'27 — Trivandrum Edition
+# ELEVATE'26 — Trivandrum Edition
 
 Landing page for the HR Evolve HR Conclave, Trivandrum Edition. Next.js 16 (static export), Tailwind CSS v4, framer-motion.
 

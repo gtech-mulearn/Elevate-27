@@ -1,25 +1,25 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// ELEVATE'27 — Trivandrum Edition
+// ELEVATE'26 — Trivandrum Edition
 // Every piece of event copy lives here. Edit this file, not the components.
 // Items marked CONFIRM are placeholders carried over from earlier editions.
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const SITE_URL = 'https://elevate27.hrevolve.org'; // CONFIRM
+export const SITE_URL = 'https://elevate27.hrevolve.org'; // CONFIRM — the Kochi ELEVATE26 site already uses elevate26.hrevolve.org
 
 export const EVENT = {
   name: 'ELEVATE',
-  year: '27',
+  year: '26',
   edition: 'Trivandrum Edition',
   editionLocal: 'തിരുവനന്തപുരം',
   kind: 'HR Conclave',
   organiser: { name: 'HR Evolve', url: 'https://hrevolve.org/' },
 
-  // CONFIRM — the event theme.
-  theme: 'Reimagining the Future of Work',
+  theme: 'Future Ready Workplaces',
+  themeSub: 'Where Human Potential Meets Intelligent Technology',
   intro:
-    'A one-day conclave for people leaders at Technopark. ELEVATE’27 brings together CHROs, founders, practitioners and policy makers to work through the questions HR now owns — how technology becomes productivity, how culture sustains change, and how organisations stay fair and human while they transform.',
+    'A one-day conclave for people leaders at Technopark. ELEVATE’26 brings together CHROs, founders, practitioners and policy makers to work through the questions HR now owns — how technology becomes productivity, how culture sustains change, and how organisations stay fair and human while they transform.',
 
-  // ISO date-time with IST offset, e.g. '2027-02-20T09:00:00+05:30'.
+  // ISO date-time with IST offset, e.g. '2026-11-20T09:00:00+05:30'.
   // Leave null until the date is final — the site shows "Date announcing soon"
   // and hides the countdown.
   startsAt: null as string | null,
@@ -39,7 +39,7 @@ export const EVENT = {
       'Networking with 200+ HR professionals & leaders',
       'Event materials & ready-to-use frameworks',
       'Certificate of participation',
-      'Exclusive ELEVATE’27 goodies',
+      'Exclusive ELEVATE’26 goodies',
     ],
   },
 
@@ -59,13 +59,13 @@ export const EVENT = {
 };
 
 // Logos shown under the hero ("Presented by", "In association with" …).
-// Left empty on purpose until the 2027 partners are confirmed. Example:
+// Left empty on purpose until the 2026 partners are confirmed. Example:
 //   { role: 'Presented by', name: 'Federal Bank', logo: '/Federal_Bank.png' },
 //   { role: 'Powered by', name: 'LEAD College', logo: '/Lead_logo.png' },
 //   { role: 'In association with', name: 'The Times of India', logo: '/TOI_logo.jpg' },
 export const PRESENTERS: { role: string; name: string; logo: string }[] = [];
 
-// CONFIRM — themes carried over from ELEVATE'26 as placeholders.
+// CONFIRM — themes carried over from the ELEVATE'26 Kochi edition as placeholders.
 export const THEMES = [
   {
     title: 'Culture as Infrastructure',
@@ -142,12 +142,12 @@ export const AGENDA_NOTE = 'Timings are indicative. Sessions and speakers will b
 
 export const FAQS = [
   {
-    q: 'Who is ELEVATE’27 for?',
+    q: 'Who is ELEVATE’26 for?',
     a: 'HR leaders, CHROs, people managers, HR practitioners at every level, founders who own the people agenda, and anyone building a career in human resources.',
   },
   {
     q: 'What does the ticket include?',
-    a: 'Entry to every session for the full day, lunch and refreshments, event materials, a certificate of participation and ELEVATE’27 goodies.',
+    a: 'Entry to every session for the full day, lunch and refreshments, event materials, a certificate of participation and ELEVATE’26 goodies.',
   },
   {
     q: 'Can I cancel or get a refund?',

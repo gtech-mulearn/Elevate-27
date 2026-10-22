@@ -53,31 +53,32 @@ export default function Tickets() {
             className="relative mx-auto flex max-w-5xl flex-col drop-shadow-[0_30px_40px_rgba(13,13,15,0.22)] lg:flex-row"
           >
             {/* Main body */}
-            <div className="relative flex-1 overflow-hidden rounded-t-3xl bg-forest p-8 text-paper sm:p-12 lg:rounded-l-3xl lg:rounded-tr-none">
+            <div className="relative flex-1 overflow-hidden rounded-t-3xl bg-forest px-6 pb-7 pt-8 text-paper sm:p-12 lg:rounded-l-3xl lg:rounded-tr-none">
               <div className="kasavu absolute inset-x-0 top-0 opacity-80" />
               <div
                 className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full opacity-10"
                 style={{ background: 'radial-gradient(circle, var(--color-gold), transparent 70%)' }}
               />
-              <div className="relative flex flex-wrap items-start justify-between gap-6">
+              {/* On phones the edition label sits beside the price (no wrap) to keep the ticket short */}
+              <div className="relative flex items-start justify-between gap-4 sm:flex-wrap sm:gap-6">
                 <div>
                   <p className="eyebrow text-gold-soft">Delegate pass</p>
-                  <p className="display mt-4 flex items-start text-[clamp(4.5rem,11vw,8rem)] font-light leading-none">
-                    <span className="mr-1 mt-3 text-[0.4em] text-gold">{EVENT.ticket.currency}</span>
+                  <p className="display mt-3 flex items-start text-[clamp(3.5rem,11vw,8rem)] font-light leading-none sm:mt-4">
+                    <span className="mr-1 mt-2 text-[0.4em] text-gold sm:mt-3">{EVENT.ticket.currency}</span>
                     {EVENT.ticket.price}
                   </p>
-                  <p className="mt-3 text-sm text-paper/60">per person · full-day access</p>
+                  <p className="mt-2 text-sm text-paper/60 sm:mt-3">per person · full-day access</p>
                 </div>
-                <div className="sm:text-right">
-                  <p className="display text-2xl italic text-gold">ELEVATE’{EVENT.year}</p>
-                  <p className="eyebrow mt-1 text-[0.6rem] text-paper/50">{EVENT.edition}</p>
+                <div className="text-right">
+                  <p className="display text-xl italic text-gold sm:text-2xl">ELEVATE’{EVENT.year}</p>
+                  <p className="eyebrow mt-1 text-[0.55rem] text-paper/50 sm:text-[0.6rem]">{EVENT.edition}</p>
                 </div>
               </div>
 
-              <ul className="relative mt-10 grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              <ul className="relative mt-6 grid gap-x-8 gap-y-2.5 text-[0.92rem] leading-snug sm:mt-10 sm:grid-cols-2 sm:gap-y-4 sm:text-base sm:leading-normal">
                 {EVENT.ticket.includes.map((f) => (
                   <li key={f} className="flex gap-3 text-paper/85">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rotate-45 bg-gold" />
+                    <span className="mt-[0.45rem] h-1.5 w-1.5 shrink-0 rotate-45 bg-gold sm:mt-2" />
                     {f}
                   </li>
                 ))}

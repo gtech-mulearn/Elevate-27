@@ -5,7 +5,7 @@
 [build.environment]
   NODE_VERSION = "20"
   NPM_VERSION = "10"
-  # Speakers / partners / sold-out status come from the ELEVATE'27 Google Sheet
+  # Speakers / partners / sold-out status come from the ELEVATE'26 Google Sheet
   # (defaults in lib/sheets.ts). Uncomment to point at a different sheet or tab.
   # NEXT_PUBLIC_SHEET_ID = "16zCivkxycg37rWt65a4aeR3b-Ku-vVbkWyCYLKTA-_4"
   # NEXT_PUBLIC_SPEAKERS_GID = "168332648"

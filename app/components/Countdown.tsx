@@ -35,7 +35,7 @@ export default function Countdown({ className = '' }: { className?: string }) {
   ] as const;
 
   return (
-    <div className={`flex gap-5 ${className}`} aria-label="Time until ELEVATE’27">
+    <div className={`flex gap-5 ${className}`} aria-label="Time until ELEVATE’26">
       {units.map(([label, value]) => (
         <div key={label} className="text-center">
           <div className="display text-3xl font-light tabular-nums sm:text-4xl">{String(value).padStart(2, '0')}</div>

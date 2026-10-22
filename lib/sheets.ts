@@ -1,4 +1,4 @@
-// Live data from the ELEVATE'27 Google Sheet (CSV export, sheet shared "anyone with the link").
+// Live data from the ELEVATE'26 Google Sheet (CSV export, sheet shared "anyone with the link").
 // One spreadsheet, three tabs; env vars override the defaults. If a tab can't be
 // fetched, callers get `null` and render their fallback.
 
@@ -148,7 +148,7 @@ export function imageCandidates(
   ];
 }
 
-// Shown while the 2027 line-up is unannounced.
+// Shown while the 2026 line-up is unannounced.
 export const PAST_SPEAKERS: Speaker[] = [
   { name: 'Seeram Sambasiva Rao IAS', title: 'Special Secretary (E & ITD) / Chairman', company: 'Kerala State IT Mission', image: '/speakers/speaker_1.jpg' },
   { name: 'Col. Sanjeev Nair (Retd.)', title: 'CEO', company: 'Technopark', image: '/speakers/speaker_4.jpg', linkedin: 'https://www.linkedin.com/in/sanjeevnair13' },

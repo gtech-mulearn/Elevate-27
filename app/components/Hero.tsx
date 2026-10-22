@@ -119,7 +119,7 @@ export default function Hero() {
         </motion.div>
 
         <h1
-          className="display mt-6 text-[clamp(4rem,15.5vw,15rem)] font-semibold text-ink sm:mt-8"
+          className="display mt-6 text-[clamp(3rem,15.5vw,15rem)] font-semibold text-ink sm:mt-8"
           aria-label={`ELEVATE’${EVENT.year} — ${EVENT.edition}`}
         >
           <RiseText text="ELEVATE" delay={0.15} />
@@ -140,9 +140,10 @@ export default function Hero() {
               {EVENT.editionLocal}
             </p>
             <div className="mt-8 flex items-center gap-4">
-              <span className="h-px w-12 bg-gold" />
+              <span className="h-px w-12 shrink-0 bg-gold" />
               <p className="eyebrow text-ink">{EVENT.theme}</p>
             </div>
+            <p className="mt-2 pl-16 font-display text-lg italic text-ink-soft">{EVENT.themeSub}</p>
           </motion.div>
 
           <motion.div

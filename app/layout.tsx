@@ -27,7 +27,7 @@ const malayalam = Noto_Serif_Malayalam({
 });
 
 const title = `ELEVATE’${EVENT.year} — ${EVENT.kind}, ${EVENT.edition}`;
-const description = `${EVENT.theme}. ${EVENT.intro}`;
+const description = `${EVENT.theme}: ${EVENT.themeSub}. ${EVENT.intro}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -35,14 +35,14 @@ export const metadata: Metadata = {
   description,
   keywords: [
     'HR Conclave',
-    'ELEVATE27',
+    'ELEVATE26',
     'HR Evolve',
     'Trivandrum',
     'Thiruvananthapuram',
     'Technopark',
     'Human Resources',
     'Future of Work',
-    'HR Conference 2027',
+    'HR Conference 2026',
   ],
   authors: [{ name: 'HR Evolve' }],
   icons: {

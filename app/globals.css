@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  /* Palette from the ELEVATE 27 poster: white, black, red → magenta */
+  /* Palette from the ELEVATE 26 poster: white, black, red → magenta */
   --color-paper: #ffffff;
   --color-paper-2: #f3f3f4;
   --color-ink: #0b0b0c;
