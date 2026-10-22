@@ -127,13 +127,22 @@ export async function fetchSoldOut(): Promise<boolean> {
   return col !== -1 && rows[1][col]?.toUpperCase() === 'TRUE';
 }
 
-// Google Drive share links → URLs that render in <img>, in order of reliability.
-export function imageCandidates(url: string): string[] {
+// Google Drive share links → URLs that render in <img>, best first.
+// The first candidate asks Google's image server for a resized, recompressed copy
+// (`=w<width>` plus `-rj-l80` = JPEG quality 80, or `-rw` = WebP, which keeps
+// transparency for logos): a 1.4 MB speaker PNG becomes ~85 KB with no visible change.
+// It also skips the redirect that drive.google.com/thumbnail goes through.
+// Requires referrerPolicy="no-referrer" on the <img>.
+export function imageCandidates(
+  url: string,
+  { width = 1000, format = 'jpg' }: { width?: number; format?: 'jpg' | 'webp' } = {},
+): string[] {
   if (!url.includes('drive.google.com')) return [url];
   const id = url.match(/\/d\/([\w-]{20,})/)?.[1] ?? url.match(/id=([\w-]{20,})/)?.[1];
   if (!id) return [url];
   return [
-    `https://drive.google.com/thumbnail?id=${id}&sz=w1000`,
+    `https://lh3.googleusercontent.com/d/${id}=w${width}-${format === 'webp' ? 'rw' : 'rj-l80'}`,
+    `https://drive.google.com/thumbnail?id=${id}&sz=w${width}`,
     `https://lh3.googleusercontent.com/d/${id}`,
     `https://drive.google.com/uc?export=view&id=${id}`,
   ];

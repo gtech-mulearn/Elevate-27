@@ -51,7 +51,7 @@ export default function Footer() {
                 className="mt-5 inline-flex items-center gap-3"
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/hr.png" alt="" className="h-10 w-auto" />
+                <img src="/hr-logo.png" alt="" width={63} height={80} loading="lazy" decoding="async" className="h-10 w-auto" />
                 <span className="link-draw text-paper/75 hover:text-paper">HR Evolve</span>
               </a>
             </div>

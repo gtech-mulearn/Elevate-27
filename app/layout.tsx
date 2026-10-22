@@ -45,7 +45,13 @@ export const metadata: Metadata = {
     'HR Conference 2027',
   ],
   authors: [{ name: 'HR Evolve' }],
-  icons: { icon: '/hr.png', apple: '/hr.png' },
+  icons: {
+    icon: [
+      { url: '/icon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
+    ],
+    apple: { url: '/apple-touch-icon.png', sizes: '180x180' },
+  },
   manifest: '/site.webmanifest',
   alternates: { canonical: '/' },
   openGraph: {
@@ -55,9 +61,9 @@ export const metadata: Metadata = {
     siteName: `ELEVATE’${EVENT.year}`,
     title,
     description,
-    images: [{ url: '/hr.png', alt: 'HR Evolve' }],
+    images: [{ url: '/icon-512.png', width: 512, height: 512, alt: 'HR Evolve' }],
   },
-  twitter: { card: 'summary_large_image', title, description, images: ['/hr.png'] },
+  twitter: { card: 'summary_large_image', title, description, images: ['/icon-512.png'] },
   robots: { index: true, follow: true },
   verification: { google: process.env.GOOGLE_SITE_VERIFICATION },
 };
@@ -102,6 +108,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en-IN" className={`${fraunces.variable} ${inter.variable} ${mono.variable} ${malayalam.variable}`}>
       <head>
+        {/* Speaker photos / partner logos (Google image CDN) and the event sheet (CSV export) */}
+        <link rel="preconnect" href="https://lh3.googleusercontent.com" />
+        <link rel="preconnect" href="https://docs.google.com" />
+        <link rel="dns-prefetch" href="https://drive.google.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}

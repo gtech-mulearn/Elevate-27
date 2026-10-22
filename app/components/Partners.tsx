@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react';
 import { fetchPartners, imageCandidates, type Partner } from '@/lib/sheets';
 
 function Logo({ partner }: { partner: Partner }) {
-  const [urls] = useState(() => imageCandidates(partner.logo));
+  // Displayed at ≤144×48px; 320px wide WebP stays sharp on 2× screens and keeps transparency.
+  const [urls] = useState(() => imageCandidates(partner.logo, { width: 320, format: 'webp' }));
   const [idx, setIdx] = useState(0);
   if (idx >= urls.length) return null;
   const img = (
@@ -13,6 +14,11 @@ function Logo({ partner }: { partner: Partner }) {
       src={urls[idx]}
       referrerPolicy="no-referrer" // Google Drive refuses image requests that carry a site referrer
       alt={partner.name}
+      width={144}
+      height={48}
+      decoding="async"
+      // Eager (not lazy): lazy-loading inside the sideways-scrolling marquee can pop logos in late.
+      fetchPriority="low"
       onError={() => setIdx((i) => i + 1)}
       className="h-12 w-36 object-contain mix-blend-multiply transition-transform duration-500 hover:scale-105"
     />

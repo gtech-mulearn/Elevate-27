@@ -7,7 +7,8 @@ import { SpotlightBackdrop } from './Backdrop';
 import { Arrow, Reveal, SectionHeading } from './ui';
 
 function Portrait({ speaker }: { speaker: Speaker }) {
-  const [urls] = useState(() => imageCandidates(speaker.image));
+  // Cards are ≤320px wide; 640px JPEG is sharp on 2× screens at ~5% of the original's size.
+  const [urls] = useState(() => imageCandidates(speaker.image, { width: 640, format: 'jpg' }));
   const [idx, setIdx] = useState(0);
   const initials = speaker.name
     .replace(/^(Dr\.?|Col\.?|Adv\.?)\s*/i, '')
@@ -30,6 +31,7 @@ function Portrait({ speaker }: { speaker: Speaker }) {
       referrerPolicy="no-referrer" // Google Drive refuses image requests that carry a site referrer
       alt={speaker.name}
       loading="lazy"
+      decoding="async"
       onError={() => setIdx((i) => i + 1)}
       className="h-full w-full object-cover object-top grayscale transition-all duration-700 ease-out-expo group-hover:scale-[1.04] group-hover:grayscale-0"
     />

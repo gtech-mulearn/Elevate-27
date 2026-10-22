@@ -9,7 +9,10 @@ import Contours, { type ContourMap } from './Contours';
 // (no CSS blur / mask-image), which keeps them cheap to render on phones.
 
 type Side = 'left' | 'right';
-const wrap = 'pointer-events-none absolute inset-0 overflow-hidden';
+// content-visibility:auto lets the browser skip rendering (and the looping
+// animations) of a backdrop while its section is off-screen; its size comes from
+// the section (inset-0), so nothing shifts when it resumes.
+const wrap = 'pointer-events-none absolute inset-0 overflow-hidden [content-visibility:auto]';
 
 /** Soft red + magenta glows on opposite sides. */
 function Glows({ side = 'right', dark = false }: { side?: Side; dark?: boolean }) {
@@ -53,7 +56,7 @@ export function ContourBackdrop({
   );
 }
 
-/** Halftone dot field fading out from one corner, with sparse red accent dots. */
+/** Halftone dot field fading out from one corner, with sparse red accent dots (no glows). */
 export function DotsBackdrop({ side = 'right' }: { side?: Side }) {
   const id = useId();
   const right = side === 'right';
@@ -80,7 +83,6 @@ export function DotsBackdrop({ side = 'right' }: { side?: Side }) {
           <rect width="100%" height="100%" fill={`url(#${id}-a)`} opacity="0.45" />
         </g>
       </svg>
-      <Glows side={side} />
     </div>
   );
 }

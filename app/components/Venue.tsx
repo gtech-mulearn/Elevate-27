@@ -16,7 +16,7 @@ export default function Venue() {
           <Reveal className="relative lg:col-span-7">
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl sm:aspect-[16/10]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={v.images[0].src} alt={v.images[0].alt} className="h-full w-full object-cover" />
+              <img src={v.images[0].src} alt={v.images[0].alt} loading="lazy" decoding="async" className="h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-forest/70 via-transparent to-transparent" />
               <div className="absolute bottom-0 left-0 p-6 text-paper sm:p-8">
                 <p className="eyebrow text-gold-soft">{v.building}</p>
@@ -26,7 +26,7 @@ export default function Venue() {
             {v.images[1] && (
               <div className="absolute -bottom-8 -right-3 hidden w-2/5 overflow-hidden rounded-xl border-[6px] border-paper shadow-xl sm:block lg:-right-10">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={v.images[1].src} alt={v.images[1].alt} className="aspect-[4/3] h-full w-full object-cover" />
+                <img src={v.images[1].src} alt={v.images[1].alt} loading="lazy" decoding="async" className="aspect-[4/3] h-full w-full object-cover" />
               </div>
             )}
           </Reveal>
