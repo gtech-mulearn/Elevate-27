@@ -119,8 +119,8 @@ export default function Speakers() {
                     The ’{EVENT.year} line-up is being <em className="italic text-gold">curated.</em>
                   </p>
                   <p className="mt-5 max-w-xl text-paper/70">
-                    CHROs, founders and practitioners from Kerala and beyond. Speakers are revealed here as they confirm —
-                    meanwhile, here’s who took the stage at ELEVATE’25 in Trivandrum.
+                    CHROs, founders and practitioners from Kerala and beyond. We’ll add speakers here as they confirm.
+                    Until then, here’s who took the stage at ELEVATE’25 in Trivandrum.
                   </p>
                 </div>
                 <a

@@ -4,7 +4,7 @@
 // Items marked CONFIRM are placeholders carried over from earlier editions.
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const SITE_URL = 'https://elevate27.hrevolve.org'; // CONFIRM — the Kochi ELEVATE26 site already uses elevate26.hrevolve.org
+export const SITE_URL = 'https://elevate26tvm.hrevolve.org';
 
 export const EVENT = {
   name: 'ELEVATE',
@@ -17,7 +17,7 @@ export const EVENT = {
   theme: 'Future Ready Workplaces',
   themeSub: 'Where Human Potential Meets Intelligent Technology',
   intro:
-    'A one-day conclave for people leaders at Technopark. ELEVATE’26 brings together CHROs, founders, practitioners and policy makers to work through the questions HR now owns — how technology becomes productivity, how culture sustains change, and how organisations stay fair and human while they transform.',
+    'A one-day conclave for people leaders at Technopark. CHROs, founders, practitioners and policy makers come together to work through what HR now owns: turning technology into real productivity, keeping culture steady through change, and staying fair and human while organisations transform.',
 
   // ISO date-time with IST offset, e.g. '2026-11-20T09:00:00+05:30'.
   // Leave null until the date is final — the site shows "Date announcing soon"
@@ -93,7 +93,7 @@ export const THEMES = [
     title: 'Workforce Economics',
     kicker: 'Capability design in an AI-normal world',
     description:
-      'The conversation has moved from automation to productivity — how talent is deployed, reskilled and structured to create value.',
+      'The conversation has moved from automation to productivity. How is talent deployed, reskilled and structured so it actually creates value?',
     takeaways: [
       'Linking talent strategy to financial performance',
       'Designing agile organisation structures',
@@ -159,7 +159,7 @@ export const FAQS = [
   },
   {
     q: 'Who organises ELEVATE?',
-    a: 'HR Evolve — a volunteer community of HR professionals at Technopark that meets every third Thursday at Park Centre for expert-led sessions and open conversations.',
+    a: 'HR Evolve is a volunteer community of HR professionals at Technopark. We meet every third Thursday at Park Centre for expert-led sessions and open conversations.',
   },
 ];
 

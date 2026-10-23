@@ -159,7 +159,7 @@ export const PAST_SPEAKERS: Speaker[] = [
   { name: 'Charles Godwin', title: 'HR Leader', company: 'Zoho Corporation', image: '/speakers/speaker_7.jpg', linkedin: 'https://www.linkedin.com/in/charlesgodwin' },
   { name: 'Jayan Nair', title: 'Chief People Officer', company: 'IBS Software', image: '/speakers/speaker_10.jpg', linkedin: 'https://www.linkedin.com/in/jayan-nair-0b11874' },
   { name: 'Saurabh Singh', title: 'Consulting and Capability', company: 'SHRM India', image: '/speakers/speaker_9.jpg', linkedin: 'https://www.linkedin.com/in/learnsingh' },
-  { name: 'Manoj Elanjickal', title: 'Director – People & Culture', company: 'H&R Block India', image: '/speakers/speaker_11.jpg', linkedin: 'https://www.linkedin.com/in/manojelanjickal' },
+  { name: 'Manoj Elanjickal', title: 'Director, People & Culture', company: 'H&R Block India', image: '/speakers/speaker_11.jpg', linkedin: 'https://www.linkedin.com/in/manojelanjickal' },
   { name: 'Dr. Jayasankar Prasad C', title: 'Director', company: 'CMD', image: '/speakers/speaker_15.jpg', linkedin: 'https://www.linkedin.com/in/jayasankar-prasad-c-b5459bb' },
   { name: 'Aditi Radhakrishnan', title: 'Consultant & Coach', company: 'Mitara Consulting Services', image: '/speakers/speaker_14.jpg', linkedin: 'https://www.linkedin.com/in/aditiradhakrishnan' },
 ];

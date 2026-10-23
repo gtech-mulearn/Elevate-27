@@ -1,7 +1,7 @@
 {
-  "name": "ELEVATE'26 — HR Conclave, Trivandrum Edition",
+  "name": "ELEVATE'26: HR Conclave, Trivandrum Edition",
   "short_name": "ELEVATE'26",
-  "description": "The HR Conclave by HR Evolve — Trivandrum Edition",
+  "description": "The HR Conclave by HR Evolve, Trivandrum Edition",
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }

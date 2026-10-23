@@ -119,8 +119,10 @@ export default function Hero() {
         </motion.div>
 
         <h1
-          className="display mt-6 text-[clamp(3rem,15.5vw,15rem)] font-semibold text-ink sm:mt-8"
-          aria-label={`ELEVATE’${EVENT.year} — ${EVENT.edition}`}
+          // nowrap: the fallback font is wider than Bodoni, so without it "’26" wraps to a
+          // second line until the web font loads, then the whole hero jumps up.
+          className="display mt-6 whitespace-nowrap text-[clamp(3rem,14.5vw,15rem)] font-semibold text-ink sm:mt-8"
+          aria-label={`ELEVATE’${EVENT.year}, ${EVENT.edition}`}
         >
           <RiseText text="ELEVATE" delay={0.15} />
           <RiseText text={`’${EVENT.year}`} delay={0.5} gradient className="-mx-[0.2em] px-[0.2em] font-normal italic" />

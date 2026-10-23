@@ -73,8 +73,25 @@ export default function Contours({
   const reduce = useReducedMotion();
   const dark = tone === 'dark';
   const id = useId();
+  // The map "ripples out" from its first summit. This used to draw each of ~24 long paths
+  // stroke-by-stroke (pathLength), which re-rasterised the whole SVG every frame and dropped
+  // to ~19 fps on phones. Now the static lines sit on one cached layer and only a radial
+  // clip grows over it.
+  const summit = MAPS[map][0];
+  const origin = `${((summit.cx / 1400) * 100).toFixed(1)}% ${((summit.cy / 900) * 100).toFixed(1)}%`;
   return (
-    <svg viewBox="0 0 1400 900" className={className} fill="none" aria-hidden preserveAspectRatio="xMidYMid slice">
+    <motion.svg
+      viewBox="0 0 1400 900"
+      className={className}
+      fill="none"
+      aria-hidden
+      preserveAspectRatio="xMidYMid slice"
+      style={{ willChange: 'clip-path', transform: 'translateZ(0)' }}
+      initial={reduce ? false : { clipPath: `circle(0% at ${origin})` }}
+      whileInView={{ clipPath: `circle(85% at ${origin})` }}
+      viewport={{ once: true }}
+      transition={{ duration: 2.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+    >
       {fade && (
         <defs>
           <radialGradient id={`${id}-g`}>
@@ -87,20 +104,16 @@ export default function Contours({
         </defs>
       )}
       <g mask={fade ? `url(#${id}-m)` : undefined}>
-        {RINGS[map].map(({ d, key, major, l }) => (
-          <motion.path
+        {RINGS[map].map(({ d, key, major }) => (
+          <path
             key={key}
             d={d}
             stroke={major ? 'var(--color-laterite)' : dark ? 'var(--color-paper)' : 'var(--color-ink)'}
             strokeOpacity={major ? (dark ? 0.55 : 0.35) : dark ? 0.1 : 0.13}
             strokeWidth={major ? 1.2 : 0.9}
-            initial={reduce ? false : { pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 2.4, delay: 0.2 + l * 0.06, ease: [0.16, 1, 0.3, 1] }}
           />
         ))}
       </g>
-    </svg>
+    </motion.svg>
   );
 }

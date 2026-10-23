@@ -32,8 +32,8 @@ export default function About() {
               that tackle the challenges and opportunities of the profession.
             </p>
             <p>
-              ELEVATE is the community’s flagship conclave — a single day where that conversation opens up to the wider
-              industry, and practitioners leave with frameworks they can use the next morning.
+              ELEVATE is the community’s flagship conclave. For one day, that conversation opens up to the wider
+              industry, and everyone leaves with frameworks they can use the very next morning.
             </p>
           </Reveal>
         </div>

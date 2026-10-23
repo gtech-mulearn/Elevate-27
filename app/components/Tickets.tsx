@@ -41,7 +41,7 @@ export default function Tickets() {
         <div className="flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-end">
           <SectionHeading index="05" eyebrow="Tickets" title="One pass." accent="The whole day." />
           <Reveal delay={0.1} className="max-w-sm text-ink-soft">
-            Seats in Travancore Hall are limited. Earlier editions sold out — book early to make sure you’re in the room.
+            Seats in Travancore Hall are limited. Earlier editions sold out, so book early if you want to be in the room.
           </Reveal>
         </div>
 

@@ -27,7 +27,7 @@ export default function Agenda() {
               <p className="mt-8 max-w-sm text-paper/65">{AGENDA_NOTE}</p>
               <div className="mt-10 inline-flex items-center gap-4 rounded-full border border-paper/15 py-2 pl-2 pr-5">
                 <span className="display grid h-12 w-12 place-items-center rounded-full bg-grad text-xl text-paper">
-                  {date ? date.day : '—'}
+                  {date ? date.day : '?'}
                 </span>
                 <span className="text-sm">
                   <span className="block text-paper">{date ? `${date.month} ${date.year}` : 'Date announcing soon'}</span>

@@ -16,8 +16,8 @@ export default function Themes() {
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
           <SectionHeading index="02" eyebrow="What we’ll explore" title="Four conversations" accent="HR can’t skip." />
           <Reveal delay={0.1} className="max-w-sm text-ink-soft">
-            Each theme runs through the day’s keynotes, power talks and panels — so you leave with a point of view, not
-            just notes.
+            Each theme runs through the day’s keynotes, power talks and panels, so you leave with a point of view and not
+            just a page of notes.
           </Reveal>
         </div>
 

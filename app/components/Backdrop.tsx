@@ -143,11 +143,11 @@ export function SpotlightBackdrop() {
   return (
     <div aria-hidden className={wrap}>
       <div className="absolute -top-8 left-[2%] h-[95%] w-[46%] origin-top -rotate-[16deg]">
-        <div className="h-full w-full origin-top animate-[sway_11s_ease-in-out_infinite_alternate]" style={beam('rgba(232, 32, 63, 0.11)')} />
+        <div className="h-full w-full origin-top animate-[sway_5s_ease-in-out_infinite_alternate]" style={beam('rgba(232, 32, 63, 0.11)')} />
       </div>
       <div className="absolute -top-8 right-[2%] h-[95%] w-[46%] origin-top rotate-[16deg]">
         <div
-          className="h-full w-full origin-top animate-[sway_13s_ease-in-out_infinite_alternate-reverse]"
+          className="h-full w-full origin-top animate-[sway_6s_ease-in-out_infinite_alternate-reverse]"
           style={beam('rgba(194, 31, 203, 0.1)')}
         />
       </div>

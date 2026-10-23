@@ -26,7 +26,7 @@ const malayalam = Noto_Serif_Malayalam({
   weight: ['400'],
 });
 
-const title = `ELEVATE’${EVENT.year} — ${EVENT.kind}, ${EVENT.edition}`;
+const title = `ELEVATE’${EVENT.year}: ${EVENT.kind}, ${EVENT.edition}`;
 const description = `${EVENT.theme}: ${EVENT.themeSub}. ${EVENT.intro}`;
 
 export const metadata: Metadata = {
@@ -76,7 +76,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'Event',
-    name: `ELEVATE’${EVENT.year} — ${EVENT.kind}, ${EVENT.edition}`,
+    name: `ELEVATE’${EVENT.year}: ${EVENT.kind}, ${EVENT.edition}`,
     description,
     ...(EVENT.startsAt && { startDate: EVENT.startsAt }),
     ...(EVENT.endsAt && { endDate: EVENT.endsAt }),
