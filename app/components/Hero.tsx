@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { EVENT, PRESENTERS, formatEventDate } from '@/lib/event';
 import Contours from './Contours';
 import Countdown from './Countdown';
@@ -9,16 +9,48 @@ import { Arrow, RegisterButton } from './ui';
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
+// True once the web fonts have loaded (or after maxWaitMs, so a slow connection never leaves
+// the hero blank). Starting the animations only then means every line appears once, already in
+// its final font, instead of showing in the fallback font and visibly re-rendering mid-load.
+function useFontsReady(maxWaitMs = 1800) {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    let done = false;
+    const go = () => {
+      if (!done) {
+        done = true;
+        setReady(true);
+      }
+    };
+    const timer = setTimeout(go, maxWaitMs);
+    const fonts = document.fonts;
+    if (!fonts || fonts.status === 'loaded') {
+      requestAnimationFrame(go);
+    } else {
+      const check = () => fonts.status === 'loaded' && go();
+      fonts.addEventListener('loadingdone', check);
+      fonts.ready.then(check);
+    }
+    return () => clearTimeout(timer);
+  }, [maxWaitMs]);
+  return ready;
+}
+
+// One shared delay for everything under the headline, so it arrives as a single wave.
+const BODY_DELAY = 0.75;
+
 function RiseText({
   text,
   delay = 0,
   className = '',
   gradient = false,
+  ready,
 }: {
   text: string;
   delay?: number;
   className?: string;
   gradient?: boolean;
+  ready: boolean;
 }) {
   const reduce = useReducedMotion();
   const chars = text.split('');
@@ -44,7 +76,7 @@ function RiseText({
               : undefined
           }
           initial={reduce ? false : { y: '105%' }}
-          animate={{ y: 0 }}
+          animate={{ y: ready ? 0 : '105%' }}
           transition={{ duration: 1.1, delay: delay + i * 0.045, ease }}
         >
           {ch}
@@ -84,6 +116,7 @@ export default function Hero() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const contourY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
   const date = formatEventDate(EVENT.startsAt);
+  const ready = useFontsReady();
 
   const facts = [
     {
@@ -107,7 +140,7 @@ export default function Hero() {
         <motion.div
           className="eyebrow flex flex-wrap items-center gap-x-4 gap-y-2 text-ink-soft"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          animate={{ opacity: ready ? 1 : 0 }}
           transition={{ duration: 1, delay: 0.1 }}
         >
           <span className="flex items-center gap-2">
@@ -124,16 +157,16 @@ export default function Hero() {
           className="display mt-6 whitespace-nowrap text-[clamp(3rem,14.5vw,15rem)] font-semibold text-ink sm:mt-8"
           aria-label={`ELEVATE’${EVENT.year}, ${EVENT.edition}`}
         >
-          <RiseText text="ELEVATE" delay={0.15} />
-          <RiseText text={`’${EVENT.year}`} delay={0.5} gradient className="-mx-[0.2em] px-[0.2em] font-normal italic" />
+          <RiseText text="ELEVATE" delay={0.15} ready={ready} />
+          <RiseText text={`’${EVENT.year}`} delay={0.5} ready={ready} gradient className="-mx-[0.2em] px-[0.2em] font-normal italic" />
         </h1>
 
         <div className="mt-6 grid gap-10 sm:mt-10 lg:grid-cols-12 lg:gap-8">
           <motion.div
             className="lg:col-span-5"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.9, ease }}
+            animate={{ opacity: ready ? 1 : 0, y: ready ? 0 : 20 }}
+            transition={{ duration: 1, delay: BODY_DELAY, ease }}
           >
             <p className="display text-[clamp(1.9rem,3.4vw,3rem)] font-light italic leading-none">
               {EVENT.edition}
@@ -151,8 +184,8 @@ export default function Hero() {
           <motion.div
             className="flex flex-col gap-8 lg:col-span-6 lg:col-start-7"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 1.05, ease }}
+            animate={{ opacity: ready ? 1 : 0, y: ready ? 0 : 20 }}
+            transition={{ duration: 1, delay: BODY_DELAY, ease }}
           >
             <p className="max-w-xl text-lg leading-relaxed text-ink-soft">{EVENT.intro}</p>
             <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
@@ -183,8 +216,8 @@ export default function Hero() {
         <motion.dl
           className="grid grid-cols-2 border-t border-ink/15 pt-6 pb-8 sm:pb-10 lg:grid-cols-4"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 1.3 }}
+          animate={{ opacity: ready ? 1 : 0 }}
+          transition={{ duration: 1, delay: BODY_DELAY }}
         >
           {facts.map((f, i) => (
             <div
