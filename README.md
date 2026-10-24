@@ -35,4 +35,4 @@ Google Drive share links work for images and logos.
 
 - **Palette:** ivory paper, Kerala forest green, *kasavu* gold and laterite red. Tokens are in `app/globals.css`.
 - **Type:** Fraunces for display, Inter Tight for text, Geist Mono for labels, and Noto Serif Malayalam for the Malayalam city name.
-- **Motifs:** the hero background is a set of topographic contour lines (`Contours.tsx`, a nod to *elevate*), and section dividers use a kasavu saree border.
+- **Motifs:** The hero background is a set of topographic contour lines (`Contours.tsx`, a nod to *elevate*), and section dividers use a kasavu saree border.
