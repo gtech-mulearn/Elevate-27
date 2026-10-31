@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useEffect, useState, type ReactNode } from 'react';
 import { EVENT } from '@/lib/event';
 import { fetchSoldOut } from '@/lib/sheets';
@@ -33,12 +33,11 @@ export function Reveal({
   className?: string;
   as?: 'div' | 'li';
 }) {
-  const reduce = useReducedMotion();
   const Comp = as === 'li' ? motion.li : motion.div;
   return (
     <Comp
       className={className}
-      initial={reduce ? false : { opacity: 0, y }}
+      initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.9, delay, ease: [0.16, 1, 0.3, 1] }}

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useId } from 'react';
 
 // Topographic contour lines — "elevation" drawn as a map of two hills.
@@ -70,7 +70,6 @@ export default function Contours({
   /** Fade the edges out radially (an in-SVG mask, cheaper than CSS mask-image). */
   fade?: boolean;
 }) {
-  const reduce = useReducedMotion();
   const dark = tone === 'dark';
   const id = useId();
   // The map "ripples out" from its first summit. This used to draw each of ~24 long paths
@@ -82,12 +81,14 @@ export default function Contours({
   return (
     <motion.svg
       viewBox="0 0 1400 900"
-      className={className}
+      // transform-gpu (a class, not inline style) promotes the cached layer; an inline transform
+      // was serialised differently on server and client and triggered a hydration warning.
+      className={`transform-gpu ${className}`}
       fill="none"
       aria-hidden
       preserveAspectRatio="xMidYMid slice"
-      style={{ willChange: 'clip-path', transform: 'translateZ(0)' }}
-      initial={reduce ? false : { clipPath: `circle(0% at ${origin})` }}
+      style={{ willChange: 'clip-path' }}
+      initial={{ clipPath: `circle(0% at ${origin})` }}
       whileInView={{ clipPath: `circle(85% at ${origin})` }}
       viewport={{ once: true }}
       transition={{ duration: 2.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}

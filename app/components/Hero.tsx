@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { EVENT, PRESENTERS, formatEventDate } from '@/lib/event';
 import Contours from './Contours';
@@ -52,7 +52,6 @@ function RiseText({
   gradient?: boolean;
   ready: boolean;
 }) {
-  const reduce = useReducedMotion();
   const chars = text.split('');
   const n = chars.length;
   return (
@@ -75,7 +74,7 @@ function RiseText({
                 }
               : undefined
           }
-          initial={reduce ? false : { y: '105%' }}
+          initial={{ y: '105%' }}
           animate={{ y: ready ? 0 : '105%' }}
           transition={{ duration: 1.1, delay: delay + i * 0.045, ease }}
         >
@@ -126,7 +125,13 @@ export default function Hero() {
     },
     { label: 'Where', value: EVENT.venue.hall, sub: `${EVENT.venue.building}, Technopark` },
     { label: 'Format', value: 'One day, in person', sub: 'Keynotes · Talks · Panels' },
-    { label: 'Pass', value: `${EVENT.ticket.currency}${EVENT.ticket.price}`, sub: 'Lunch & certificate included' },
+    {
+      label: 'Pass',
+      value: `${EVENT.ticket.currency}${EVENT.ticket.earlyBird.active ? EVENT.ticket.earlyBird.price : EVENT.ticket.price}`,
+      sub: EVENT.ticket.earlyBird.active
+        ? `Early bird · ${EVENT.ticket.currency}${EVENT.ticket.price} after`
+        : 'Lunch & certificate included',
+    },
   ];
 
   return (

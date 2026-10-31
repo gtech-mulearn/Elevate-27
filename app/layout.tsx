@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Fraunces, Inter_Tight, Geist_Mono, Noto_Serif_Malayalam } from 'next/font/google';
 import './globals.css';
 import { EVENT, SITE_URL } from '@/lib/event';
+import MotionProvider from './components/MotionProvider';
 
 const fraunces = Fraunces({
   variable: '--font-fraunces',
@@ -117,7 +118,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <MotionProvider>{children}</MotionProvider>
+      </body>
     </html>
   );
 }

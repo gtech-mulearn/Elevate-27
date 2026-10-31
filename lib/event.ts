@@ -30,7 +30,10 @@ export const EVENT = {
   registerUrl: '',
 
   ticket: {
-    price: 499, // CONFIRM — ₹499 for ELEVATE'25 and '26
+    price: 999, // regular price
+    // While active, the early-bird price is the one shown and sold; set active to false
+    // when the early-bird window closes and the regular price takes over.
+    earlyBird: { price: 599, active: true },
     currency: '₹',
     note: 'Tickets are non-refundable once purchased.',
     includes: [

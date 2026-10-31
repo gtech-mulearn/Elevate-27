@@ -17,6 +17,8 @@ export default function Tickets() {
   const soldOut = useSoldOut();
   const reduce = useReducedMotion();
   const date = formatEventDate(EVENT.startsAt);
+  const earlyBird = EVENT.ticket.earlyBird.active;
+  const currentPrice = earlyBird ? EVENT.ticket.earlyBird.price : EVENT.ticket.price;
 
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
@@ -63,13 +65,28 @@ export default function Tickets() {
               <div className="relative flex items-start justify-between gap-4 sm:flex-wrap sm:gap-6">
                 <div>
                   <p className="eyebrow text-gold-soft">Delegate pass</p>
-                  <p className="display mt-3 flex items-start text-[clamp(3.5rem,11vw,8rem)] font-light leading-none sm:mt-4">
-                    <span className="mr-1 mt-2 text-[0.4em] text-gold sm:mt-3">{EVENT.ticket.currency}</span>
-                    {EVENT.ticket.price}
-                  </p>
+                  <div className="mt-3 flex items-end gap-x-4 sm:mt-4 sm:gap-x-6">
+                    <p className="display flex items-start text-[clamp(3.5rem,11vw,8rem)] font-light leading-none">
+                      <span className="mr-1 mt-2 text-[0.4em] text-gold sm:mt-3">{EVENT.ticket.currency}</span>
+                      {currentPrice}
+                    </p>
+                    {earlyBird && (
+                      <div className="flex flex-col items-start gap-1.5 pb-1 sm:gap-2 sm:pb-2">
+                        <span className="bg-grad eyebrow whitespace-nowrap rounded-full px-2.5 py-1 text-[0.55rem] tracking-[0.16em] text-paper sm:text-[0.6rem]">
+                          <span className="hidden sm:inline">Early bird · </span>Save {EVENT.ticket.currency}
+                          {EVENT.ticket.price - EVENT.ticket.earlyBird.price}
+                        </span>
+                        {/* the old price: big, dimmed, with a bold red strike so it reads at a glance */}
+                        <span className="display text-3xl leading-none text-paper/55 line-through decoration-laterite decoration-[3px] sm:text-5xl sm:decoration-4">
+                          {EVENT.ticket.currency}
+                          {EVENT.ticket.price}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                   <p className="mt-2 text-sm text-paper/60 sm:mt-3">per person · full-day access</p>
                 </div>
-                <div className="text-right">
+                <div className="hidden text-right sm:block">
                   <p className="display text-xl italic text-gold sm:text-2xl">ELEVATE’{EVENT.year}</p>
                   <p className="eyebrow mt-1 text-[0.55rem] text-paper/50 sm:text-[0.6rem]">{EVENT.edition}</p>
                 </div>
